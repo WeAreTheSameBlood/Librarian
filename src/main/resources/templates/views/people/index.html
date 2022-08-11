@@ -5,13 +5,13 @@
     <title>All people</title>
 </head>
 <body>
-Hello world
+<h1>List of all users </h1>
 <hr/>
 <div th:each="person : ${people}">
     <a th:href="@{/people/{id}(id = ${person.getId()})}"
-       th:text="${person.getName()} + ', ' + ${person.getYearOfBirth()}">user</a>
+       th:text="'id: ' + ${person.getId()} + '; name: ' + ${person.getName()}">user</a>
 </div>
-
 <hr/>
+<a href="/people/new">Create new person</a>
 </body>
 </html>
