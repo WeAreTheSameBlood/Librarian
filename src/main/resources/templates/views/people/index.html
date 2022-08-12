@@ -12,6 +12,15 @@
        th:text="${person.getName()} + ', ' + ${person.getYearOfBirth()}">user</a>
 </div>
 <hr/>
+<!--
 <a href="/people/new">Create new person</a>
+<a href="/book">To all books</a>
+-->
+<form th:method="GET" th:action="@{/people/new}">
+    <input type="submit" value="Create new person"/>
+</form>
+<form th:method="GET" th:action="@{/book}">
+    <input type="submit" value="To all books"/>
+</form>
 </body>
 </html>

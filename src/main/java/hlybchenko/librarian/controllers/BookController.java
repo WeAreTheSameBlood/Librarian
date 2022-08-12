@@ -1,6 +1,7 @@
 package hlybchenko.librarian.controllers;
 
 import hlybchenko.librarian.dao.BookDAO;
+import hlybchenko.librarian.dao.PersonDAO;
 import hlybchenko.librarian.models.Book;
 import hlybchenko.librarian.models.Person;
 import org.springframework.stereotype.Controller;
@@ -13,22 +14,25 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/book")
 public class BookController {
     private final BookDAO bookDAO;
+    private final PersonDAO personDAO;
 
-    public BookController(BookDAO bookDAO) {
+    public BookController(BookDAO bookDAO, PersonDAO personDAO) {
         this.bookDAO = bookDAO;
+        this.personDAO = personDAO;
     }
 
 
     @GetMapping()
     public String index(Model model){
         model.addAttribute("book", bookDAO.index());
-        System.out.println(model.getAttribute("book"));
         return "views/book/index";
     }
 
     @GetMapping("/{id}")
-    public String show(@PathVariable("id") int id, Model model){
+    public String show(@PathVariable("id") int id, Model model,
+                       @ModelAttribute("person") Person person){
         model.addAttribute("book", bookDAO.show(id));
+        model.addAttribute("people", personDAO.index());
         return "views/book/show";
     }
 
@@ -39,7 +43,7 @@ public class BookController {
     }
 
     @PostMapping
-    public String createPerson(@ModelAttribute("book") Book book, BindingResult bindingResult){
+    public String createBook(@ModelAttribute("book") Book book, BindingResult bindingResult){
         if (bindingResult.hasErrors()) return "views/book/new";
         bookDAO.save(book);
         return "redirect:/book";
@@ -56,12 +60,20 @@ public class BookController {
                          BindingResult bindingResult, @PathVariable int id){
         if (bindingResult.hasErrors()) return "views/book/edit";
         bookDAO.update(id, book);
-        return "redirect:/people";
+        return "redirect:/book";
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable int id){
         bookDAO.delete(id);
         return "redirect:/book";
+    }
+
+    @PatchMapping("/{id}/bind")
+    public String bindBook(@ModelAttribute("person") Person person,
+                           @ModelAttribute("book") Book book,
+                           @PathVariable int id){
+        bookDAO.bind(id, person.getId());
+        return "redirect:/book/";
     }
 }
