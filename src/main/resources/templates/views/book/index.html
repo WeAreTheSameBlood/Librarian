@@ -11,11 +11,12 @@
     <a th:href="@{/book/{id}(id = ${b.getBook_id()})}"
        th:text="${b.getName()} + ', ' + ${b.getAuthor()} + ', ' + ${b.getYear()}">user</a>
 </div>
-<hr/>
 <!--
 <a href="/book/new">Create new book</a>
 <a href="/people">To all people</a>
 -->
+<hr/>
+
 <form th:method="GET" th:action="@{/book/new}">
     <input type="submit" value="Create new book"/>
 </form>

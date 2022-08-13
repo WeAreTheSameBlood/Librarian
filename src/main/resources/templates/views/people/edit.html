@@ -19,6 +19,8 @@
     <br/>
     <input type="submit" value="Update!">
 </form>
+<hr/>
+
 <form th:method="GET" th:action="@{/people/{id}(id = ${person.getId()})}">
     <input type="submit" value="Back"/>
 </form>

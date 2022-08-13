@@ -23,6 +23,8 @@
     <br/>
     <input type="submit" value="Update!">
 </form>
+
+<hr/>
 <form th:method="GET" th:action="@{/book/{id}(id = ${book.getBook_id()})}">
     <input type="submit" value="Back"/>
 </form>

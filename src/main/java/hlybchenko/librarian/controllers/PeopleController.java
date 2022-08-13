@@ -1,5 +1,6 @@
 package hlybchenko.librarian.controllers;
 
+import hlybchenko.librarian.dao.BookDAO;
 import hlybchenko.librarian.dao.PersonDAO;
 import hlybchenko.librarian.models.Person;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +16,12 @@ import javax.validation.Valid;
 @RequestMapping("/people")
 public class PeopleController {
     private final PersonDAO personDAO;
+    private final BookDAO bookDAO;
 
     @Autowired
-    public PeopleController(PersonDAO personDAO) {
+    public PeopleController(PersonDAO personDAO, BookDAO bookDAO) {
         this.personDAO = personDAO;
+        this.bookDAO = bookDAO;
     }
 
     @GetMapping()
@@ -30,6 +33,7 @@ public class PeopleController {
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model){
         model.addAttribute("person", personDAO.show(id));
+        model.addAttribute("book", bookDAO.checkBind(id));
         return "views/people/show";
     }
 
