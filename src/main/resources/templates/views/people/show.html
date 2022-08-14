@@ -7,22 +7,23 @@
 <body>
 <h1>Person info</h1>
 <hr/>
+<div>
 <p th:text="'name: ' + ${person.getName()}">VALUE</p>
 <p th:text="'year: ' + ${person.getYearOfBirth()}">VALUE</p>
-
-<div th:each="b:${book}">
-    <div th:if="${book.getBook_id()}">
-        <p th:text="${book.getName()} + ', ' + ${book.getAuthor()} + ', ' + ${book.getYear()}"/>
-    </div>
-</div>
-<div th:unless="${book}">
-    <p th:text="'The person has not yet taken a single book.'"/>
-</div>
-
-<!--
-<a th:href="@{/people/{id}/edit(id = ${person.getId()})}">Edit</a>
--->
 <hr/>
+</div>
+<div th:if="${!books.isEmpty()}">
+    <p th:text="'Books: '"/>
+    <ol th:each="book:${books}">
+        <li>
+            <p th:text="${book.getName()} + ', ' + ${book.getAuthor()} + ', ' + ${book.getYear()}"/>
+        </li>
+    </ol>
+</div>
+<div th:unless="${!books.isEmpty()}">
+    <p th:text="'The person has not yet taken a single book.'"/>
+    <hr/>
+</div>
 <form th:method="GET" th:action="@{/people/{id}/edit(id = ${person.getId()})}">
     <input type="submit" value="Edit"/>
 </form>
@@ -30,9 +31,7 @@
 <form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">
     <input type="submit" value="Delete"/>
 </form>
-<!--
-<a href="/people">Back</a>
--->
+
 <form th:method="GET" th:action="@{/people}">
     <input type="submit" value="Back"/>
 </form>

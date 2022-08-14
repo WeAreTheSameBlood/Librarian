@@ -1,6 +1,7 @@
 package hlybchenko.librarian.dao;
 
 import hlybchenko.librarian.models.Book;
+import hlybchenko.librarian.models.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -47,8 +48,19 @@ public class BookDAO {
                 person_id, book_id);
     }
 
-    public Book checkBind(int person_id) {
-        return jdbcTemplate.query("SELECT * FROM Book WHERE person_id=?", new Object[] {person_id},
+    public void unbind(int book_id){
+        jdbcTemplate.update("UPDATE Book SET person_id=null WHERE book_id=?", book_id);
+    }
+
+    public Person getBookOwner(int book_id){
+        Book book = jdbcTemplate.query("SELECT * FROM Book WHERE book_id=?", new Object[] {book_id},
                 new BeanPropertyRowMapper<>(Book.class)).stream().findAny().orElse(null);
+        return jdbcTemplate.query("SELECT * FROM Person WHERE id=?", new Object[]{book.getPerson_id()},
+                new BeanPropertyRowMapper<>(Person.class)).stream().findFirst().orElse(null);
+    }
+
+    public List<Book> checkBindingOnPerson(int person_id) {
+        return jdbcTemplate.query("SELECT * FROM Book WHERE person_id=?", new Object[] {person_id},
+                new BeanPropertyRowMapper<>(Book.class));
     }
 }

@@ -10,12 +10,8 @@
 <div th:each="person : ${people}">
     <a th:href="@{/people/{id}(id = ${person.getId()})}"
        th:text="${person.getName()} + ', ' + ${person.getYearOfBirth()}">user</a>
+    <hr/>
 </div>
-<!--
-<a href="/people/new">Create new person</a>
-<a href="/book">To all books</a>
--->
-<hr/>
 <form th:method="GET" th:action="@{/people/new}">
     <input type="submit" value="Create new person"/>
 </form>

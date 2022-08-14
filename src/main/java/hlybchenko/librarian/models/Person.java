@@ -7,7 +7,7 @@ import javax.validation.constraints.Pattern;
 
 @Data
 public class Person {
-    private int id;
+    private Integer id;
     @Pattern(regexp = "[A-Z]\\w+ [A-Z]\\w+ [A-Z].",
     message = "Your full name should be in this format: Firstname Lastname Patronymic (William Gates H.)")
     private String name;

@@ -1,27 +1,35 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Book info</title>
 </head>
 <body>
 <h1>Book info</h1>
+<div>
 <hr/>
 <p th:text="'author: ' + ${book.getAuthor()}">VALUE</p>
 <p th:text="'name: ' + ${book.getName()}">VALUE</p>
 <p th:text="'year: ' + ${book.getYear()}">VALUE</p>
-
+<hr/>
+</div>
+<div th:if="${book.getPerson_id() == null}">
 <form th:method="PATCH" th:action="@{/book/{id}/bind(id = ${book.getBook_id()})}">
+    <p th:text="'So the book is now taken by no one'"/>
     <label for="person">Enter the person for bind: </label>
     <select th:object="${person}" th:field="*{id}" id="person">
         <option th:each="person : ${people}" th:value="${person.getId()}" th:text="${person.getName()}"/>
     </select>
     <input type="submit" value="Bind current book">
 </form>
-<!--
-<a th:href="@{/book/{id}/edit(id = ${book.getBook_id()})}">Edit</a>
--->
+</div>
+<div th:if="${book.getPerson_id() != null}">
+    <p th:text="'The book is now linked to: ' + ${personWithBook.getName()}"/>
+    <form th:method="PATCH" th:action="@{/book/{id}/unbind(id = ${book.getBook_id()})}">
+        <input type="submit" value="Unbind this book"/>
+    </form>
 <hr/>
+</div>
 <form th:method="GET" th:action="@{/book/{id}/edit(id = ${book.getBook_id()})}">
     <input type="submit" value="Edit"/>
 </form>
@@ -30,9 +38,6 @@
     <input type="submit" value="Delete"/>
 </form>
 
-<!--
-<a href="/book">Back</a>
--->
 <form th:method="GET" th:action="@{/book}">
     <input type="submit" value="Back"/>
 </form>

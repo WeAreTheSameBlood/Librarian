@@ -33,6 +33,8 @@ public class BookController {
                        @ModelAttribute("person") Person person){
         model.addAttribute("book", bookDAO.show(id));
         model.addAttribute("people", personDAO.index());
+        model.addAttribute("personWithBook", bookDAO.getBookOwner(id));
+        System.out.println(model.getAttribute("book"));
         return "views/book/show";
     }
 
@@ -74,6 +76,13 @@ public class BookController {
                            @ModelAttribute("book") Book book,
                            @PathVariable int id){
         bookDAO.bind(id, person.getId());
-        return "redirect:/book/";
+        return "redirect:/book/"+id;
+    }
+
+    @PatchMapping("/{id}/unbind")
+    public String unbindBook(@ModelAttribute("book") Book book,
+                           @PathVariable int id){
+        bookDAO.unbind(id);
+        return "redirect:/book/"+id;
     }
 }
