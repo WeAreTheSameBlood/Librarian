@@ -14,11 +14,11 @@
 </div>
 <div th:if="${!books.isEmpty()}">
     <p th:text="'Books: '"/>
-    <ol th:each="book:${books}">
+    <ul th:each="book:${books}">
         <li>
             <p th:text="${book.getName()} + ', ' + ${book.getAuthor()} + ', ' + ${book.getYear()}"/>
         </li>
-    </ol>
+    </ul>
 </div>
 <div th:unless="${!books.isEmpty()}">
     <p th:text="'The person has not yet taken a single book.'"/>
@@ -35,6 +35,5 @@
 <form th:method="GET" th:action="@{/people}">
     <input type="submit" value="Back"/>
 </form>
-
 </body>
 </html>

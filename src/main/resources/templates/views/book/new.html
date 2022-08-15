@@ -8,7 +8,7 @@
 <h1>Create new book</h1>
 <hr/>
 <form th:method="POST" th:action="@{/book}" th:object="${book}">
-    <label for="name">Enter author: </label>
+    <label for="author">Enter author: </label>
     <input type="text" th:field="*{author}" id="author"/>
     <div style="color: red" th:if="${#fields.hasErrors('author')}" th:errors="*{author}">Error author</div>
     <br/>
@@ -16,7 +16,7 @@
     <input type="text" th:field="*{name}" id="name"/>
     <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error name</div>
     <br/>
-    <label for="name">Year: </label>
+    <label for="year">The year of publishing: </label>
     <input type="text" th:field="*{year}" id="year"/>
     <div style="color: red" th:if="${#fields.hasErrors('year')}" th:errors="*{year}">Error year</div>
     <br/>

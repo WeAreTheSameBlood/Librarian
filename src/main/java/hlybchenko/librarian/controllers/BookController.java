@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 
 @Controller
 @RequestMapping("/book")
@@ -34,7 +36,6 @@ public class BookController {
         model.addAttribute("book", bookDAO.show(id));
         model.addAttribute("people", personDAO.index());
         model.addAttribute("personWithBook", bookDAO.getBookOwner(id));
-        System.out.println(model.getAttribute("book"));
         return "views/book/show";
     }
 
@@ -45,7 +46,7 @@ public class BookController {
     }
 
     @PostMapping
-    public String createBook(@ModelAttribute("book") Book book, BindingResult bindingResult){
+    public String createBook(@ModelAttribute("book") @Valid Book book, BindingResult bindingResult){
         if (bindingResult.hasErrors()) return "views/book/new";
         bookDAO.save(book);
         return "redirect:/book";
@@ -58,7 +59,7 @@ public class BookController {
     }
 
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("book") Book book,
+    public String update(@ModelAttribute("book") @Valid Book book,
                          BindingResult bindingResult, @PathVariable int id){
         if (bindingResult.hasErrors()) return "views/book/edit";
         bookDAO.update(id, book);
