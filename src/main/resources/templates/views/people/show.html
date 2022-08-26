@@ -27,11 +27,11 @@
 <form th:method="GET" th:action="@{/people/{id}/edit(id = ${person.getId()})}">
     <input type="submit" value="Edit"/>
 </form>
-
+<br/>
 <form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">
     <input type="submit" value="Delete"/>
 </form>
-
+<br/>
 <form th:method="GET" th:action="@{/people}">
     <input type="submit" value="Back"/>
 </form>

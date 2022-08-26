@@ -33,11 +33,11 @@
 <form th:method="GET" th:action="@{/book/{id}/edit(id = ${book.getBook_id()})}">
     <input type="submit" value="Edit"/>
 </form>
-
+<br/>
 <form th:method="DELETE" th:action="@{/book/{id}(id=${book.getBook_id()})}">
     <input type="submit" value="Delete"/>
 </form>
-
+<br/>
 <form th:method="GET" th:action="@{/book}">
     <input type="submit" value="Back"/>
 </form>
