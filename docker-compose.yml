@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=library_db
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./library_app/src/main/resources/data.sql:/docker-entrypoint-initdb.d/data.sql
+  library_app:
+    build: ./library_app
+    container_name: library_app
+    ports:
+      - "8080:8080"
+    restart: always
+    depends_on:
+      - postgres
+

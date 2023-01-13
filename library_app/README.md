@@ -31,7 +31,7 @@ Before start project need:
 3. Enter **SELECT * FROM person** and **SELECT FROM book** in SQL query console for check.
 
 ### You can check out the demo below:
-![](library_app/src/main/resources/demo/demo_video.gif)
+![](src/main/resources/demo/demo_video.gif)
 
 ***
 *You can find my contacts in my profile*
