@@ -5,6 +5,7 @@ import hlybchenko.librarian.models.Person;
 import hlybchenko.librarian.repositories.BooksRepo;
 import hlybchenko.librarian.repositories.PeopleRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,8 +24,11 @@ public class BooksService {
         this.peopleRepo = peopleRepo;
     }
 
-    public List<Book> findAll() {
-        return booksRepo.findAll();
+    public List<Book> findAll(Integer numPage, Integer itemsOnPage) {
+        return  numPage == null && itemsOnPage == null ?
+                booksRepo.findAll() :
+                booksRepo.findAll(PageRequest.of(numPage, itemsOnPage)).getContent();
+//        return booksRepo.findAll();
     }
 
     public Book show(int book_id) {

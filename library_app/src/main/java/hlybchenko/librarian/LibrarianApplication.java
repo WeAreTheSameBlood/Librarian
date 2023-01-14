@@ -11,5 +11,8 @@ public class LibrarianApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(LibrarianApplication.class, args);
+
+        System.out.println("Open in browser (default): http://localhost:8080/");
     }
+
 }

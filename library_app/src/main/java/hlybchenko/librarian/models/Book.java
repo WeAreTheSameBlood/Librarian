@@ -15,7 +15,6 @@ import javax.validation.constraints.Size;
 @Table(name = "book")
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class Book {
 
@@ -23,6 +22,8 @@ public class Book {
     @Column(name = "book_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int book_id;
+
+
 
     @ManyToOne
     @JoinColumn(name = "person_id",referencedColumnName = "id")
@@ -42,4 +43,11 @@ public class Book {
     @Min(value = 1000, message = "The year of publication of the book cannot be less than 1000")
     @Column(name = "year")
     private Integer year;
+
+    public Book(Person owner, String name, String author, Integer year) {
+        this.owner = owner;
+        this.name = name;
+        this.author = author;
+        this.year = year;
+    }
 }

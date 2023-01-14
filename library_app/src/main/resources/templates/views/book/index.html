@@ -7,9 +7,26 @@
 <body>
 <h1>List of all books</h1>
 <hr/>
-<div th:each="b : ${book}">
+    <p>Books on screen:
+        <a th:href="@{/book(numPage=0, itemsOnPage=5)}">5</a>
+        <a th:href="@{/book(numPage=0, itemsOnPage=10)}">10</a>
+        <a th:href="@{/book}">all</a>
+    </p>
+<hr/>
+<div th:each="b : ${books}">
     <a th:href="@{/book/{id}(id = ${b.getBook_id()})}"
        th:text="${b.getName()} + ', ' + ${b.getAuthor()} + ', ' + ${b.getYear()}">user</a>
+</div>
+<div th:if="${numPage!=null}">
+    <br/>
+    <ul class="pagination">
+        <li class="page-item" th:if="${numPage}>0">
+            <a class="page-link" th:href="@{/book(numPage=${numPage}-1, itemsOnPage=${itemsOnPage})}">Previous</a>
+        </li>
+        <li class="page-item" th:if="${books.size()}>=${itemsOnPage}">
+            <a class="page-link" th:href="@{/book(numPage=${numPage}+1, itemsOnPage=${itemsOnPage})}">Next</a>
+        </li>
+    </ul>
 </div>
 <hr/>
 <form th:method="GET" th:action="@{/book/new}">

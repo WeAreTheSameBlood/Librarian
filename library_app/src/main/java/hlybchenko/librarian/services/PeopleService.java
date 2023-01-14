@@ -1,5 +1,6 @@
 package hlybchenko.librarian.services;
 
+import hlybchenko.librarian.dao.PersonDAO;
 import hlybchenko.librarian.models.Person;
 import hlybchenko.librarian.repositories.PeopleRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +29,8 @@ public class PeopleService {
     }
 
     @Transactional
-    public void save(Person newPrson) {
-        peopleRepo.save(newPrson);
+    public void save(Person newPerson) {
+        peopleRepo.save(newPerson);
     }
 
     @Transactional

@@ -4,6 +4,11 @@ import hlybchenko.librarian.models.Book;
 import hlybchenko.librarian.models.Person;
 import hlybchenko.librarian.services.BooksService;
 import hlybchenko.librarian.services.PeopleService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +20,7 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/book")
 public class BookController {
+
     private final BooksService booksService;
     private final PeopleService peopleService;
 
@@ -25,13 +31,19 @@ public class BookController {
 
 
     @GetMapping()
-    public String index(Model model){
-        model.addAttribute("book", booksService.findAll());
+    public String index(Model model,
+                        @RequestParam(required = false) Integer numPage,
+                        @RequestParam(required = false) Integer itemsOnPage){
+        System.out.println("\n" + numPage + " + " + itemsOnPage + "\n");
+        model.addAttribute("books", booksService.findAll(numPage, itemsOnPage));
+        model.addAttribute("numPage", numPage);
+        model.addAttribute("itemsOnPage", itemsOnPage);
         return "views/book/index";
     }
 
     @GetMapping("/{id}")
-    public String show(@PathVariable("id") int id, Model model,
+    public String show(@PathVariable("id") int id,
+                       Model model,
                        @ModelAttribute("person") Person person){
         model.addAttribute("book", booksService.show(id));
         model.addAttribute("people", peopleService.findAll());
@@ -46,21 +58,24 @@ public class BookController {
     }
 
     @PostMapping
-    public String createBook(@ModelAttribute("book") @Valid Book book, BindingResult bindingResult){
+    public String createBook(@ModelAttribute("book") @Valid Book book,
+                             BindingResult bindingResult){
         if (bindingResult.hasErrors()) return "views/book/new";
         booksService.save(book);
         return "redirect:/book";
     }
 
     @GetMapping("/{id}/edit")
-    public String edit(Model model, @PathVariable int id){
+    public String edit(Model model,
+                       @PathVariable int id){
         model.addAttribute("book", booksService.show(id));
         return "views/book/edit";
     }
 
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("book") @Valid Book book,
-                         BindingResult bindingResult, @PathVariable int id){
+                         BindingResult bindingResult,
+                         @PathVariable int id){
         if (bindingResult.hasErrors()) return "views/book/edit";
         booksService.update(id, book);
         return "redirect:/book";
@@ -82,7 +97,7 @@ public class BookController {
 
     @PatchMapping("/{id}/unbind")
     public String unbindBook(@ModelAttribute("book") Book book,
-                           @PathVariable int id){
+                             @PathVariable int id){
         booksService.unbind(id);
         return "redirect:/book/"+id;
     }
