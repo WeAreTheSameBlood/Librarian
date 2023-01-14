@@ -13,7 +13,7 @@
 <p th:text="'year: ' + ${book.getYear()}">VALUE</p>
 <hr/>
 </div>
-<div th:if="${book.getPerson_id() == null}">
+<div th:if="${book.getOwner() == null}">
 <form th:method="PATCH" th:action="@{/book/{id}/bind(id = ${book.getBook_id()})}">
     <p th:text="'So the book is now taken by no one'"/>
     <label for="person">Enter the person for bind: </label>
@@ -23,7 +23,7 @@
     <input type="submit" value="Bind current book">
 </form>
 </div>
-<div th:if="${book.getPerson_id() != null}">
+<div th:if="${book.getOwner() != null}">
     <p th:text="'The book is now linked to: ' + ${personWithBook.getName()}"/>
     <form th:method="PATCH" th:action="@{/book/{id}/unbind(id = ${book.getBook_id()})}">
         <input type="submit" value="Unbind this book"/>
