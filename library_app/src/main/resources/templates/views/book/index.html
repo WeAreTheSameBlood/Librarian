@@ -2,24 +2,57 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>All books</title>
+    <title>Books page</title>
 </head>
 <body>
-<h1>List of all books</h1>
-<hr/>
-    <p>Books on screen:
-        <a th:href="@{/book(numPage=0, itemsOnPage=5)}">5</a>
-        <a th:href="@{/book(numPage=0, itemsOnPage=10)}">10</a>
-        <a th:href="@{/book}">all</a>
-    </p>
-<hr/>
-<div th:each="b : ${books}">
-    <a th:href="@{/book/{id}(id = ${b.getBook_id()})}"
-       th:text="${b.getName()} + ', ' + ${b.getAuthor()} + ', ' + ${b.getYear()}">user</a>
+
+<script type="text/javascript">
+    function searchByTitle() {
+        window.open("book?findByTitle=" + document.getElementById("searchReq").value);
+    }
+</script>
+
+<br/>
+<form>
+    <label for="searchReq">Enter text for search by title:</label>
+    <input type="text" id="searchReq">
+    <button onclick="searchByTitle()" type="submit">Search</button>›
+</form>
+<div class="search-result-link" th:if="${!searchBarObjects.isEmpty()}">
+    <h1>List of find by title:</h1>
+    <hr/>
+    <div th:each="findBook : ${searchBarObjects}">
+        <a th:href="@{/book/{id}(id = ${findBook.getBook_id()})}"
+           th:text="${findBook.getName()} + ', ' + ${findBook.getAuthor()} + ', ' + ${findBook.getYear()}"></a>
+    </div>
+    <br/><br/>
+    <form th:method="GET" th:action="@{/book}">
+        <input type="submit" value="To all books"/>
+    </form>
+</div>
+<div th:if="${searchBarObjects.isEmpty()}">
+    <h1>List of all books</h1>
+    <hr/>
+    <div class="pagination&sort">
+        <p>Books on screen:
+            <a th:href="@{/book(numPage=0, itemsOnPage=5)}">5</a>
+            <a th:href="@{/book(numPage=0, itemsOnPage=10)}">10</a>
+            <a th:href="@{/book}">all</a>
+        </p>
+        <p>Sort (for all) by:
+            <a th:href="@{/book(sortBy=name)}">title</a>
+            <a th:href="@{/book(sortBy=year)}">year</a>
+        </p>
+    </div>
+    <hr/>
+    <div class="bookList" th:each="b : ${books}">
+        <a th:href="@{/book/{id}(id = ${b.getBook_id()})}"
+           th:text="${b.getName()} + ', ' + ${b.getAuthor()} + ', ' + ${b.getYear()}"></a>
+</div>
 </div>
 <div th:if="${numPage!=null}">
     <br/>
-    <ul class="pagination">
+    <ul>
         <li class="page-item" th:if="${numPage}>0">
             <a class="page-link" th:href="@{/book(numPage=${numPage}-1, itemsOnPage=${itemsOnPage})}">Previous</a>
         </li>

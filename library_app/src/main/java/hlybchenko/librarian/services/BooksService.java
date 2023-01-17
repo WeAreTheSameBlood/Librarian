@@ -6,6 +6,7 @@ import hlybchenko.librarian.repositories.BooksRepo;
 import hlybchenko.librarian.repositories.PeopleRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,12 +25,21 @@ public class BooksService {
         this.peopleRepo = peopleRepo;
     }
 
-    public List<Book> findAll(Integer numPage, Integer itemsOnPage) {
-        return  numPage == null && itemsOnPage == null ?
+    public List<Book> findAll(Integer numPage, Integer itemsOnPage, String sortBy) {
+        System.out.println(numPage + " + " + itemsOnPage + " + " + sortBy);
+        if (sortBy == null)
+            return  numPage == null && itemsOnPage == null ?
                 booksRepo.findAll() :
                 booksRepo.findAll(PageRequest.of(numPage, itemsOnPage)).getContent();
-//        return booksRepo.findAll();
+        else if (numPage==null && itemsOnPage==null) {
+            return booksRepo.findAll(Sort.by(sortBy));
+        } else return booksRepo.findAll(PageRequest.of(numPage, itemsOnPage, Sort.by(sortBy))).getContent();
     }
+
+    public List<Book> searchByTitle(String searchText) {
+        return booksRepo.findBooksByNameIsContainingIgnoreCase(searchText);
+    }
+
 
     public Book show(int book_id) {
         return booksRepo.findById(book_id).orElse(null);

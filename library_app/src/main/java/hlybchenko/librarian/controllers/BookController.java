@@ -33,11 +33,14 @@ public class BookController {
     @GetMapping()
     public String index(Model model,
                         @RequestParam(required = false) Integer numPage,
-                        @RequestParam(required = false) Integer itemsOnPage){
-        System.out.println("\n" + numPage + " + " + itemsOnPage + "\n");
-        model.addAttribute("books", booksService.findAll(numPage, itemsOnPage));
+                        @RequestParam(required = false) Integer itemsOnPage,
+                        @RequestParam(required = false) String sortBy,
+                        @RequestParam(required = false) String findByTitle){
+        model.addAttribute("books", booksService.findAll(numPage, itemsOnPage, sortBy));
         model.addAttribute("numPage", numPage);
         model.addAttribute("itemsOnPage", itemsOnPage);
+        model.addAttribute("sortBy", sortBy);
+        model.addAttribute("searchBarObjects", booksService.searchByTitle(findByTitle));
         return "views/book/index";
     }
 

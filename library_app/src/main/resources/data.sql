@@ -27,12 +27,16 @@ insert into person (name, yearofbirth) VALUES ('Maryna Galanskya A.', 2000);
 insert into person (name, yearofbirth) VALUES ('Evhenyi Stryuk O.', 2008);
 insert into person (name, yearofbirth) VALUES ('Stanislav Lindover P.', 1972);
 insert into person (name, yearofbirth) VALUES ('Oleksandra Kovalenko O.', 1999);
+insert into person (name, yearofbirth) VALUES ('Victoria Artemenko A.', 2001);
+insert into person (name, yearofbirth) VALUES ('Volodymyr Zelenskyy O.', 1978);
+insert into person (name, yearofbirth) VALUES ('Barack Obama H.', 1961);
+insert into person (name, yearofbirth) VALUES ('Elon Musk R.', 1971);
 
 insert into book (person_id, name, author, "year") VALUES (1, 'Kobzar (poetry collection)', 'Taras Shevchenko H.', 1840);
 insert into book (person_id, name, author, "year") VALUES (null, 'Nineteen Eighty-Four', 'George Orwell', 1949);
 insert into book (person_id, name, author, "year") VALUES (2, 'Divine Comedy', 'Dante Alighieri', 1720);
 insert into book (person_id, name, author, "year") VALUES (4, 'Frankenstein; or, The Modern Prometheus ', 'Mary Shelley', 1818);
-insert into book (person_id, name, author, "year") VALUES (1, 'Kallocain', 'Karin Boye', 1940);
+insert into book (person_id, name, author, "year") VALUES (11, 'Kallocain', 'Karin Boye', 1940);
 insert into book (person_id, name, author, "year") VALUES (1, 'Atlas Shrugged', 'Ayn Rand', 1957);
 insert into book (person_id, name, author, "year") VALUES (3, 'Fahrenheit 451', 'Ray Bradbury', 1953);
 insert into book (person_id, name, author, "year") VALUES (5, 'The Great Gatsby', 'Scott Fitzgerald F.', 1925);
@@ -42,3 +46,6 @@ insert into book (person_id, name, author, "year") VALUES (8, 'Dracula', 'Bram S
 insert into book (person_id, name, author, "year") VALUES (null, 'The Lord of the Rings', 'J. R. R. Tolkien', 1954);
 insert into book (person_id, name, author, "year") VALUES (10, 'The Adventures of Huckleberry Finn', 'Mark Twain ', 1884);
 insert into book (person_id, name, author, "year") VALUES (3, 'The Iliad', 'Homer', -800);
+insert into book (person_id, name, author, "year") VALUES (9, 'Animal Farm ', 'George Orwell', 1945);
+insert into book (person_id, name, author, "year") VALUES (14, 'The Castle', 'Franz Kafka', 1920);
+insert into book (person_id, name, author, "year") VALUES (null, 'The Art of War', 'Sun Tzu', -5000);
