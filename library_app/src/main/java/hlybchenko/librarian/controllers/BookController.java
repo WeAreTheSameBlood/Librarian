@@ -4,11 +4,6 @@ import hlybchenko.librarian.models.Book;
 import hlybchenko.librarian.models.Person;
 import hlybchenko.librarian.services.BooksService;
 import hlybchenko.librarian.services.PeopleService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -51,6 +46,7 @@ public class BookController {
         model.addAttribute("book", booksService.show(id));
         model.addAttribute("people", peopleService.findAll());
         model.addAttribute("personWithBook", booksService.getBookOwner(id));
+        model.addAttribute("checkExpirationDate", booksService.checkExpirationDate(id));
         return "views/book/show";
     }
 

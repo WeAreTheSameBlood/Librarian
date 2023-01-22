@@ -31,7 +31,7 @@ public class Person {
 
     @NotNull(message = "This field cannot be empty")
     @Min(value = 1900, message = "Year of birth should be greater than 1900")
-    @Column(name = "yearofbirth")
+    @Column(name = "year_of_birth")
     private Integer yearOfBirth;
 
     @OneToMany(mappedBy = "owner")

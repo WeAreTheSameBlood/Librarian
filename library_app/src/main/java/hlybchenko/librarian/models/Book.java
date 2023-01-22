@@ -1,15 +1,14 @@
 package hlybchenko.librarian.models;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "book")
@@ -22,8 +21,6 @@ public class Book {
     @Column(name = "book_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int book_id;
-
-
 
     @ManyToOne
     @JoinColumn(name = "person_id",referencedColumnName = "id")
@@ -40,14 +37,17 @@ public class Book {
     private String author;
 
     @NotNull(message = "This field cannot be empty")
-    @Min(value = 1000, message = "The year of publication of the book cannot be less than 1000")
     @Column(name = "year")
     private Integer year;
 
-    public Book(Person owner, String name, String author, Integer year) {
+    @Column(name = "date_time_bind")
+    private Timestamp dateTimeBind;
+
+    public Book(Person owner, String name, String author, Integer year, Timestamp dateTimeBind) {
         this.owner = owner;
         this.name = name;
         this.author = author;
         this.year = year;
+        this.dateTimeBind = dateTimeBind;
     }
 }

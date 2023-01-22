@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service
@@ -45,6 +46,14 @@ public class BooksService {
         return booksRepo.findById(book_id).orElse(null);
     }
 
+    public boolean checkExpirationDate(int book_id){
+        Timestamp actualDateTime = new Timestamp(System.currentTimeMillis());
+        Timestamp bindDateTime = booksRepo.findById(book_id).orElse(null).getDateTimeBind();
+        return bindDateTime != null ?
+                actualDateTime.getTime() >= (bindDateTime.getTime() + 864_000_000) :
+                false;
+    }
+
     @Transactional
     public void save(Book newBook) {
         booksRepo.save(newBook);
@@ -65,11 +74,13 @@ public class BooksService {
     public void bind(int book_id, int person_id) {
         booksRepo.findById(book_id).orElse(null)
                 .setOwner(peopleRepo.findById(person_id).orElse(null));
+        booksRepo.findById(book_id).orElse(null).setDateTimeBind(new Timestamp(System.currentTimeMillis()));
     }
 
     @Transactional
     public void unbind(int book_id) {
         booksRepo.findById(book_id).orElse(null).setOwner(null);
+        booksRepo.findById(book_id).orElse(null).setDateTimeBind(null);
     }
 
     public Person getBookOwner(int book_id) {

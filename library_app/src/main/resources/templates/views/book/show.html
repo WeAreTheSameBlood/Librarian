@@ -6,13 +6,15 @@
 </head>
 <body>
 <h1>Book info</h1>
+
 <div>
-<hr/>
-<p th:text="'author: ' + ${book.getAuthor()}">VALUE</p>
-<p th:text="'name: ' + ${book.getName()}">VALUE</p>
-<p th:text="'year: ' + ${book.getYear()}">VALUE</p>
-<hr/>
+    <hr/>
+    <p th:text="'author: ' + ${book.getAuthor()}">VALUE</p>
+    <p th:text="'name: ' + ${book.getName()}">VALUE</p>
+    <p th:text="'year: ' + ${book.getYear()}">VALUE</p>
+    <hr/>
 </div>
+
 <div th:if="${book.getOwner() == null}">
 <form th:method="PATCH" th:action="@{/book/{id}/bind(id = ${book.getBook_id()})}">
     <p th:text="'So the book is now taken by no one'"/>
@@ -23,13 +25,21 @@
     <input type="submit" value="Bind current book">
 </form>
 </div>
-<div th:if="${book.getOwner() != null}">
-    <p th:text="'The book is now linked to: ' + ${personWithBook.getName()}"/>
-    <form th:method="PATCH" th:action="@{/book/{id}/unbind(id = ${book.getBook_id()})}">
+
+<div th:if="${book.owner != null}">
+    <p th:text="'The book is now linked to: ' + ${personWithBook.name} + ';'"/>
+    <p th:if="${checkExpirationDate}" style="color: red"
+        th:text="'Date binding: ' + ${book.dateTimeBind.date} + '.'
+        + ${book.dateTimeBind.month+1} + '.' + ${book.dateTimeBind.getYear()+1900} + ' ---> the book is overdue!'"/>
+    <p th:unless="${checkExpirationDate}"
+       th:text="'Date binding: ' + ${book.dateTimeBind.date} + '.'
+       + ${book.dateTimeBind.month+1} + '.' + ${book.dateTimeBind.getYear()+1900}"/>
+    <form th:method="PATCH" th:action="@{/book/{id}/unbind(id = ${book.book_id})}">
         <input type="submit" value="Unbind this book"/>
     </form>
 <hr/>
 </div>
+
 <form th:method="GET" th:action="@{/book/{id}/edit(id = ${book.getBook_id()})}">
     <input type="submit" value="Edit"/>
 </form>
